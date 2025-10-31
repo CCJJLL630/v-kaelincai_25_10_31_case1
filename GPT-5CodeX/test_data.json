@@ -1,0 +1,114 @@
+{
+  "test_cases": [
+    {
+      "name": "simple_balanced_payload",
+      "bug_type": "accumulator_reset",
+      "input": {
+        "payload": [
+          {"type": "click", "value": 10},
+          {"type": "view", "value": 5}
+        ],
+        "weights": {"click": 1.5, "view": 0.5}
+      },
+      "expected_output": 17.5,
+      "expected_result": {
+        "pre_optimization": "fail",
+        "post_optimization": "pass"
+      }
+    },
+    {
+      "name": "nested_children_payload",
+      "bug_type": "accumulator_reset",
+      "input": {
+        "payload": [
+          {
+            "type": "click",
+            "value": 4,
+            "children": [
+              {"type": "purchase", "value": 2},
+              {"type": "view", "value": [1, 2, 1]}
+            ]
+          },
+          {"type": "error", "value": "3"}
+        ],
+        "weights": {"click": 1.5, "view": 0.5, "purchase": 3, "error": -2}
+      },
+      "expected_output": 8.0,
+      "expected_result": {
+        "pre_optimization": "fail",
+        "post_optimization": "pass"
+      }
+    },
+    {
+      "name": "empty_payload",
+      "bug_type": "edge_case",
+      "input": {
+        "payload": [],
+        "weights": {"click": 1.0}
+      },
+      "expected_output": 0.0,
+      "expected_result": {
+        "pre_optimization": "pass",
+        "post_optimization": "pass"
+      }
+    },
+    {
+      "name": "invalid_and_unknown_values",
+      "bug_type": "input_sanitization",
+      "input": {
+        "payload": [
+          {"type": "click", "value": null},
+          {"type": "unknown", "value": {"a": 2, "b": "4"}},
+          {"type": "click", "value": ["1", "bad", 3]}
+        ],
+        "weights": {"click": 1.2}
+      },
+      "expected_output": 10.8,
+      "expected_result": {
+        "pre_optimization": "fail",
+        "post_optimization": "pass"
+      }
+    },
+    {
+      "name": "deeply_nested_payload",
+      "bug_type": "nested_traversal_performance",
+      "input": {
+        "payload": [
+          {
+            "type": "session",
+            "value": {
+              "duration": 30,
+              "actions": [1, 2, {"nested": [3, 4]}]
+            },
+            "children": [
+              {
+                "type": "click",
+                "value": 2,
+                "children": [
+                  {"type": "purchase", "value": 5}
+                ]
+              },
+              {
+                "type": "error",
+                "value": ["-1", "-0.5", "bad"]
+              }
+            ]
+          },
+          {"type": "view", "value": 7}
+        ],
+        "weights": {
+          "session": 0.8,
+          "click": 1.5,
+          "purchase": 3.5,
+          "error": -1.5,
+          "view": 0.5
+        }
+      },
+      "expected_output": 58.25,
+      "expected_result": {
+        "pre_optimization": "fail",
+        "post_optimization": "pass"
+      }
+    }
+  ]
+}

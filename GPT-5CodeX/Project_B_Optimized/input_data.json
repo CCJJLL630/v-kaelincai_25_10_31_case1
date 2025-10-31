@@ -1,0 +1,25 @@
+{
+  "payload": [
+    {
+      "type": "session",
+      "value": {
+        "duration": 18,
+        "actions": [2, 2, {"more": [1, 1, 1]}]
+      },
+      "children": [
+        {"type": "click", "value": 4},
+        {"type": "purchase", "value": "3"}
+      ]
+    },
+    {
+      "type": "view",
+      "value": 6
+    }
+  ],
+  "weights": {
+    "session": 0.8,
+    "click": 1.5,
+    "purchase": 3.5,
+    "view": 0.5
+  }
+}

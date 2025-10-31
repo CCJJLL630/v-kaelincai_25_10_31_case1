@@ -1,0 +1,22 @@
+{
+  "payload": [
+    {
+      "type": "click",
+      "value": 12,
+      "children": [
+        {"type": "view", "value": 3},
+        {"type": "purchase", "value": 1}
+      ]
+    },
+    {
+      "type": "error",
+      "value": "2"
+    }
+  ],
+  "weights": {
+    "click": 1.5,
+    "view": 0.5,
+    "purchase": 3.0,
+    "error": -1.0
+  }
+}
