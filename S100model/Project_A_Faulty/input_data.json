@@ -1,0 +1,5 @@
+{
+  "base_price": 120.0,
+  "discounts": [10.0, 5.0, 2.5],
+  "dynamic_adjustment": "lambda price: price - 3"
+}
